@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# Build dist/ artifacts for a jamovi/R version and publish a GitHub release
+# with the per-platform .jmo files attached.
+#
+#   bash tools/release.sh 4.6.0
+#
+# Requires combo/<pkg>_<version>.jmo to already exist (build it first with
+# tools/install.sh).
+set -euo pipefail
+
+R_VERSION="${1:-}"
+
+usage() { echo "usage: release.sh R_VERSION" >&2; }
+
+case "$R_VERSION" in
+  [0-9]*.[0-9]*.[0-9]*) ;;
+  *) usage; exit 1 ;;
+esac
+
+command -v gh >/dev/null || { echo "error: gh CLI is required" >&2; exit 1; }
+
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+MODULE_DIR="$ROOT/combo"
+MODULE="$(awk -F': *' '$1 == "Package" { print $2; exit }' "$MODULE_DIR/DESCRIPTION")"
+VERSION="$(awk -F': *' '$1 == "Version" { print $2; exit }' "$MODULE_DIR/DESCRIPTION")"
+REPO="$(cd "$ROOT" && gh repo view --json nameWithOwner -q .nameWithOwner)"
+
+echo ">> building dist/ for R $R_VERSION"
+bash "$ROOT/tools/prepare-jmo.sh" "$R_VERSION" all
+
+TAG="v${VERSION}-R${R_VERSION}"
+shopt -s nullglob
+ASSETS=("$ROOT"/dist/"${MODULE}_${VERSION}_R${R_VERSION}"_*.jmo)
+shopt -u nullglob
+[ "${#ASSETS[@]}" -gt 0 ] || { echo "error: no built artifacts found in dist/ for R $R_VERSION" >&2; exit 1; }
+
+echo ">> creating release $TAG on $REPO"
+gh release create "$TAG" \
+  --repo "$REPO" \
+  --title "$MODULE $VERSION (jamovi / R $R_VERSION)" \
+  --notes "$MODULE $VERSION built for jamovi releases bundling R $R_VERSION. Download the .jmo matching your OS, then in jamovi: Modules -> jamovi library -> Sideload." \
+  "${ASSETS[@]}"
+
+echo ">> done: https://github.com/$REPO/releases/tag/$TAG"

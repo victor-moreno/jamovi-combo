@@ -1,0 +1,15 @@
+[submodule "jamovi-conttables-2xK"]
+	path = jamovi-conttables-2xK
+	url = https://github.com/victor-moreno/jamovi-conttables-2xK.git
+[submodule "jamovi-conttablespaired-2xK"]
+	path = jamovi-conttablespaired-2xK
+	url = https://github.com/victor-moreno/jamovi-conttablespaired-2xK.git
+[submodule "jamovi-corr"]
+	path = jamovi-corr
+	url = https://github.com/victor-moreno/jamovi-corrInspect.git
+[submodule "jamovi-linreg"]
+	path = jamovi-linreg
+	url = https://github.com/victor-moreno/jamovi-regInspect.git
+[submodule "jamovi-jmvplus"]
+	path = jamovi-jmvplus
+	url = https://github.com/victor-moreno/jamovi-jmvplus.git

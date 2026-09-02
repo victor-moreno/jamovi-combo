@@ -1,0 +1,10 @@
+combo/
+dist/
+*.jmo
+.Rhistory
+.DS_Store
+.claude
+.cache
+.tmp
+.venv
+.envrc

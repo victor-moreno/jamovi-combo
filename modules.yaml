@@ -1,0 +1,14 @@
+# List of source modules bundled into the combo module.
+# To add a new module: `git submodule add <url> <dir>` then add one entry
+# here (repo = the submodule dir, pkg = the R package subdir inside it).
+modules:
+  - repo: jamovi-conttables-2xK
+    pkg: conttables2xK
+  - repo: jamovi-conttablespaired-2xK
+    pkg: conttablespaired2xK
+  - repo: jamovi-corr
+    pkg: corrInspect
+  - repo: jamovi-linreg
+    pkg: regInspect
+  - repo: jamovi-jmvplus
+    pkg: jmvplus

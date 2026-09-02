@@ -1,0 +1,23 @@
+Package: vmExtras
+Type: Package
+Title: Combo Module (conttables2xK, conttablespaired2xK, corrInspect, regInspect, jmvplus)
+Version: 0.1.0
+Date: 2026-09-02
+Authors@R: c(person("Ravi", "Selker", role=c("aut", "cph")),
+    person("Jonathon", "Love", role=c("aut", "cph"), email="jon@thon.cc"),
+    person("Damian", "Dropmann", role=c("aut", "cph")),
+    person("Victor", "Moreno", role=c("aut", "cre", "cph"), email="v.moreno@iconcologia.net"),
+    person("Maurizio", "Agosti", role=c("ctb", "cph")),
+    person("Sebastian", "Jentschke", role=c("ctb", "cph")))
+Maintainer: Victor Moreno <v.moreno@iconcologia.net>
+Description: A single sideloadable jamovi module bundling the analyses from
+    conttables2xK, conttablespaired2xK, corrInspect, regInspect and jmvplus,
+    for one-file installation. Each analysis is developed and released in its
+    own repository (see README); this package only assembles them into one
+    module -- see tools/assemble.R. Do not edit R/ or jamovi/ directly, they
+    are generated.
+License: GPL (>= 2)
+Language: en-GB
+Encoding: UTF-8
+Depends:
+    R (>= 3.2)
