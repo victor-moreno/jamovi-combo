@@ -17,6 +17,14 @@ Bundled modules (see `modules.yaml`):
 SNPstats and snpImport are **not** included -- they're large, actively
 changing, and already ship their own `.jmo` releases.
 
+## Installation (sideload)
+
+Prebuilt `.jmo` files are attached to the [Releases](../../releases) page, one
+release per jamovi/R version. Pick the file matching your OS, then in jamovi:
+**Modules -> jamovi library -> Sideload** and select the downloaded `.jmo`.
+Not sure which R version your jamovi bundles? Check **Help -> About** in
+jamovi.
+
 ## How the combo module is built
 
 `jamovi.yaml` supports multiple analyses in one module (jmvplus already does
