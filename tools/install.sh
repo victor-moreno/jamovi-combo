@@ -59,3 +59,11 @@ else
   echo "!! Install $ARTIFACT by hand (Modules -> Install from file)."
   exit 1
 fi
+
+# jmc drops `addonFor` when compiling *.a.yaml into jamovi.yaml/jamovi-full.yaml
+# (confirmed bug, present in this machine's jmvtools and in jamovi/jamovi:28.1's
+# jamovi-compiler too) -- without it, addon analyses like jmvplus's Descriptives
+# extension show up as their own duplicate, broken menu entry instead of being
+# merged into the analysis they extend. Patch it back into the installed
+# module and the .jmo.
+python3 "$ROOT/tools/fix-addon-menu.py" "$HERE/jamovi" "$MODDIR" "$ARTIFACT" "$MODULE"
