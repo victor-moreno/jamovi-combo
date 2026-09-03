@@ -137,7 +137,8 @@ def main():
     total = 0
     total += patch_file(Path(module_dir) / "jamovi.yaml", addons)
     total += patch_file(Path(module_dir) / "jamovi-full.yaml", addons)
-    total += patch_jmo(jmo_path, module_name, addons)
+    if jmo_path not in ("", "-") and Path(jmo_path).exists():
+        total += patch_jmo(jmo_path, module_name, addons)
 
     if total:
         print(f">> fix-addon-menu: restored addonFor on {total} entr{'y' if total == 1 else 'ies'} "
