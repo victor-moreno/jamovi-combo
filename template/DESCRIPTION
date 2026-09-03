@@ -1,8 +1,8 @@
 Package: vmExtras
 Type: Package
 Title: Combo Module (conttables2xK, conttablespaired2xK, corrInspect, regInspect, jmvplus)
-Version: 0.1.0
-Date: 2026-09-02
+Version: 0.2.0
+Date: 2026-09-03
 Authors@R: c(person("Ravi", "Selker", role=c("aut", "cph")),
     person("Jonathon", "Love", role=c("aut", "cph"), email="jon@thon.cc"),
     person("Damian", "Dropmann", role=c("aut", "cph")),
