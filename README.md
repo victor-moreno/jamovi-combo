@@ -13,11 +13,18 @@ Bundled modules (see `modules.yaml`):
 
 ## Installation (sideload)
 
-Prebuilt `.jmo` files are attached to the [Releases](../../releases) page, one
-release per jamovi/R version. Pick the file matching your OS, then in jamovi:
-**Modules -> jamovi library -> Sideload** and select the downloaded `.jmo`.
-Not sure which R version your jamovi bundles? Check **Help -> About** in
-jamovi.
+Prebuilt `.jmo` files are attached to the [Releases](../../releases) page — four per version,
+one for each combination of jamovi series and CPU:
+
+| your jamovi | Apple silicon | Intel / AMD |
+| --- | --- | --- |
+| **current** (bundles R 4.6.0) | `vmExtras_<version>_current_R4.6.0_arm64.jmo` | `vmExtras_<version>_current_R4.6.0_x64.jmo` |
+| **solid** (bundles R 4.5.0) | `vmExtras_<version>_solid_R4.5.0_arm64.jmo` | `vmExtras_<version>_solid_R4.5.0_x64.jmo` |
+
+The same file works on macOS, Windows and Linux: jamovi's compatibility check covers the R
+version and the CPU, not the operating system. Check **Help -> About** if you are unsure which R
+your jamovi bundles. Then, in jamovi: **Modules -> jamovi library -> Sideload** and select the
+downloaded `.jmo`.
 
 ## How the combo module is built
 
@@ -40,15 +47,21 @@ bash tools/install.sh
 ```
 
 Assembles `combo/` and runs `jmvtools::install()` into jamovi desktop. Needs
-an R matching jamovi.app's bundled R version (see the jamovi-skill notes on
-this project's two build machines -- the arm64 Mac has a known
-`jmvtools::prepare()` / node-version issue; the Intel Mac's system R builds
-cleanly). For other OS/arch targets once you have one working `.jmo`:
+an R on `PATH` matching jamovi.app's bundled R version, or jmvcore segfaults
+on load. Release builds do not: they use the app's own R (see below).
+
+Release builds go against a specific jamovi app, which is what stamps the artifact — the R on
+`PATH` is not involved:
 
 ```
-bash tools/prepare-jmo.sh 4.6.0 all       # metadata-only repackage, all platforms
-bash tools/release.sh 4.6.0               # + publish a GitHub release
+bash tools/build-jmo.sh current  # build against /Applications/jamovi.app, both CPUs, into dist/
+bash tools/build-jmo.sh solid    # ... against /Applications/jamovi-solid.app
+bash tools/release.sh            # build all four and publish them as one GitHub release
+bash tools/release.sh --prune    # ... and delete superseded releases and their tags
 ```
+
+`tools/build-jmo.sh` re-runs `tools/assemble.R` first, so a release is always built from the
+submodules' current state.
 
 ## Adding a new module
 
